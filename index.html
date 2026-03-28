@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>4RKN HOST PRO</title>
+<title>4RKN HOST FINAL</title>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
 
@@ -12,25 +13,21 @@ body{
   background:black;
   color:white;
   font-family:'Creepster';
-  overflow:hidden;
 }
 
-/* BACKGROUND DARK + glitch */
+/* BACKGROUND */
 body::before{
   content:"";
   position:fixed;
-  width:100%;height:100%;
+  width:100%;
+  height:100%;
   background:url('https://i.imgur.com/8Km9tLL.jpg') center/cover no-repeat;
-  filter:blur(5px) brightness(0.2);
+  filter:blur(5px) brightness(0.3);
   z-index:-1;
-  animation:flickerBG 0.6s infinite;
-}
-@keyframes flickerBG{
-  0%,100%{filter:blur(5px) brightness(0.2);}
-  50%{filter:blur(6px) brightness(0.05);}
+  pointer-events:none;
 }
 
-/* LOGIN SCREEN */
+/* LOGIN */
 #loginScreen{
   position:fixed;
   width:100%;
@@ -42,190 +39,35 @@ body::before{
   background:black;
   z-index:10;
 }
+
 input{
   padding:10px;
   margin:5px;
-  border:none;
-  outline:none;
   background:#111;
+  border:none;
   color:white;
 }
+
 button{
   padding:10px 20px;
   background:red;
   border:none;
   color:white;
   cursor:pointer;
+  position:relative;
+  z-index:5;
 }
 
-/* MAIN SITE */
+/* MAIN */
 #mainSite{display:none;}
+
 .title{
   text-align:center;
-  font-size:50px;
+  font-size:45px;
   color:red;
   margin-top:20px;
-  text-shadow:0 0 20px red;
 }
 
 /* TERMINAL */
 .terminal{
-  width:90%;
-  max-width:800px;
-  margin:20px auto;
-  background:rgba(0,0,0,0.95);
-  border:2px solid red;
-  padding:15px;
-  height:300px;
-  overflow-y:auto;
-  font-family:monospace;
-  color:#0f0;
-}
-
-/* GUIDE */
-#guide{
-  text-align:center;
-  color:red;
-  margin-top:10px;
-}
-
-/* FLOATING TEXT */
-.neon{
-  position:absolute;
-  color:red;
-  font-size:20px;
-  text-shadow:0 0 10px red;
-  animation:float 6s linear forwards;
-  pointer-events:none;
-}
-@keyframes float{
-  0%{transform:translateY(100vh);opacity:0;}
-  20%{opacity:1;}
-  100%{transform:translateY(-100px);opacity:0;}
-}
-
-/* JUMPSCARE */
-#jumpscare{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:black;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  opacity:0;
-  z-index:999;
-  pointer-events:none;
-}
-</style>
-</head>
-<body>
-
-<!-- LOGIN -->
-<div id="loginScreen">
-  <h2>LOGIN 4RKN HOST PRO</h2>
-  <p>Follow IG <a href="https://instagram.com/4rknnnajaa" target="_blank">@4rknnnajaa</a> dan DM "PW NYA APAAN" untuk password</p>
-  <input id="user" placeholder="Username">
-  <input id="pass" type="password" placeholder="Password">
-  <button onclick="login()">LOGIN</button>
-  <p id="msg" style="color:red;"></p>
-</div>
-
-<!-- MAIN SITE -->
-<div id="mainSite">
-  <div class="title">4RKN HOST PRO</div>
-  <div id="guide">Klik START SYSTEM</div>
-  <button onclick="startHack()">START SYSTEM</button>
-  <div class="terminal" id="terminal"></div>
-</div>
-
-<!-- JUMPSCARE -->
-<div id="jumpscare">
-  <img src="https://i.imgur.com/Z6XK7vR.png" width="350">
-</div>
-
-<!-- AUDIO -->
-<audio id="bg" src="https://www.myinstants.com/media/sounds/creepy-ambience.mp3" loop></audio>
-<audio id="scare" src="https://www.myinstants.com/media/sounds/scream.mp3"></audio>
-
-<script>
-// LOGIN SYSTEM
-const PASSWORDS = ["ARKAN GANTENG","FOLLOW4RKN","GHOST2026"];
-const USER="guest";
-
-function login(){
-  const u = user.value.trim();
-  const p = pass.value.trim();
-  if(u===USER && PASSWORDS.includes(p.toUpperCase())){
-    loginScreen.style.display="none";
-    mainSite.style.display="block";
-    bg.play();
-  } else {
-    msg.innerText="Salah! Follow & DM IG @4rknnnajaa dulu!";
-  }
-}
-
-// TERMINAL FAKE DATA
-const data=[
-"Connecting to server...",
-"Bypassing security...",
-"Access granted...",
-"Loading victim data...",
-"Name: patem | IP: 192.168.1.2",
-"Name: amru | IP: 10.0.0.3",
-"Name: padil | IP: 172.16.0.1",
-"Injecting system scripts...",
-"System compromised..."
-];
-
-let i=0;
-function startHack(){
-  guide.innerText="Memulai sistem...";
-  let interval=setInterval(()=>{
-    if(i<data.length){
-      terminal.innerHTML+=data[i]+"<br>";
-      terminal.scrollTop=terminal.scrollHeight;
-      guide.innerText=data[i];
-      i++;
-    }else{
-      clearInterval(interval);
-      jumpscare();
-      glitchEffect();
-    }
-  },800);
-}
-
-// JUMPSCARE
-function jumpscare(){
-  setTimeout(()=>{
-    jumpscareDiv.style.opacity=1;
-    scare.play();
-    setTimeout(()=> jumpscareDiv.style.opacity=0,3000);
-  },1000);
-}
-
-const jumpscareDiv=document.getElementById("jumpscare");
-
-// FLOATING NEON TEXT
-const quotes=["aku lelah...","sendiri...","gelap...","semua hilang...","aku masih disini..."];
-setInterval(()=>{
-  let q=document.createElement("div");
-  q.className="neon";
-  q.style.left=Math.random()*window.innerWidth+"px";
-  q.innerText=quotes[Math.floor(Math.random()*quotes.length)];
-  document.body.appendChild(q);
-  setTimeout(()=>q.remove(),5000);
-},1200);
-
-// GLITCH EFFECT ON TERMINAL
-function glitchEffect(){
-  terminal.style.color="#f00";
-  let flicker=setInterval(()=>{
-    terminal.style.opacity=Math.random()*0.7+0.3;
-  },100);
-  setTimeout(()=>{clearInterval(flicker); terminal.style.opacity=1;},3000);
-}
-</script>
-
-</body>
-</html>
+  width:
