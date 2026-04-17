@@ -1,73 +1,93 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>4RKN HOST FINAL</title>
-
+<title>██ SYSTEM OVERRIDE ██</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+body{margin:0;font-family:monospace;background:black;color:#00ffcc;overflow:hidden}
+#boot,#lock{position:fixed;width:100%;height:100%;background:black;color:#00ffcc;display:flex;align-items:center;justify-content:center;flex-direction:column}
+#main{display:none;padding:15px}
+.card{border:1px solid #00ffcc;padding:15px;margin:10px 0;cursor:pointer}
+#popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:black;border:1px solid #00ffcc;padding:15px;display:none;width:80%}
+#ip{position:fixed;bottom:5px;left:5px;font-size:10px;color:red}
+#warning{position:fixed;top:0;width:100%;text-align:center;color:red;font-size:12px}
+#cam{position:fixed;top:10px;right:10px;color:red;font-size:12px}
+</style>
+</head>
+<body><div id="boot"><div id="text"></div></div>
+<div id="lock" style="display:none">
+<h2>⚠ ACCESS DENIED ⚠</h2>
+<p id="count"></p>
+</div><div id="main">
+<h2>☠ DARK CORE DATABASE ☠</h2>
+<div class="card" onclick="openData('DEBI OMPONG')">DEBI OMPONG</div>
+<div class="card" onclick="openData('AMRU JAWA KUNO')">AMRU JAWA KUNO</div>
+<div class="card" onclick="openData('NABIL PATEM')">NABIL PATEM</div>
+<div class="card" onclick="openData('RAFATHUL ZOMBIE')">RAFATHUL ZOMBIE</div>
+<div class="card" onclick="openData('ARKAN ORANG GANTENG')">ARKAN ORANG GANTENG</div>
+</div><div id="popup">
+<h3 id="name"></h3>
+<p id="info"></p>
+<p id="track"></p>
+</div><div id="ip"></div>
+<div id="warning">⚠ YOU ARE BEING MONITORED ⚠</div>
+<div id="cam">📸 CAMERA ACTIVE</div><audio autoplay loop>
+<source src="https://www.myinstants.com/media/sounds/creepy-ambience.mp3">
+</audio><audio id="boom">
+<source src="https://www.myinstants.com/media/sounds/loud-scream.mp3">
+</audio><script>
+// BOOT
+let bootText=["Booting system...","Injecting code...","Bypassing firewall...","ACCESS GRANTED"];
+let i=0;
+function boot(){
+ if(i<bootText.length){
+  document.getElementById('text').innerText=bootText[i];
+  i++;
+  setTimeout(boot,700);
+ }else{
+  document.getElementById('boot').style.display='none';
+  document.getElementById('main').style.display='block';
+ }
+}
+boot();
 
-body{
-  margin:0;
-  background:black;
-  color:white;
-  font-family:'Creepster';
+// DATA
+function openData(nama){
+ document.getElementById('popup').style.display='block';
+ document.getElementById('name').innerText=nama;
+ document.getElementById('info').innerText="FILE CORRUPTED...";
+ let loc=["Jakarta","Unknown","Dark Node","Hidden Server"];
+ document.getElementById('track').innerText="Tracking: "+loc[Math.floor(Math.random()*loc.length)];
 }
 
-/* BACKGROUND */
-body::before{
-  content:"";
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:url('https://i.imgur.com/8Km9tLL.jpg') center/cover no-repeat;
-  filter:blur(5px) brightness(0.3);
-  z-index:-1;
-  pointer-events:none;
-}
+// FAKE IP
+setInterval(()=>{
+ let ip=Math.floor(Math.random()*255)+"."+Math.floor(Math.random()*255)+"."+Math.floor(Math.random()*255)+"."+Math.floor(Math.random()*255);
+ document.getElementById('ip').innerText="IP TRACE: "+ip;
+},2000);
 
-/* LOGIN */
-#loginScreen{
-  position:fixed;
-  width:100%;
-  height:100%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  background:black;
-  z-index:10;
-}
+// GLITCH
+setInterval(()=>{
+ document.body.style.filter="hue-rotate("+Math.random()*360+"deg)";
+},500);
 
-input{
-  padding:10px;
-  margin:5px;
-  background:#111;
-  border:none;
-  color:white;
-}
-
-button{
-  padding:10px 20px;
-  background:red;
-  border:none;
-  color:white;
-  cursor:pointer;
-  position:relative;
-  z-index:5;
-}
-
-/* MAIN */
-#mainSite{display:none;}
-
-.title{
-  text-align:center;
-  font-size:45px;
-  color:red;
-  margin-top:20px;
-}
-
-/* TERMINAL */
-.terminal{
-  width:
+// RANDOM LOCKDOWN
+setInterval(()=>{
+ if(Math.random()>0.75){
+  document.getElementById('main').style.display='none';
+  document.getElementById('lock').style.display='flex';
+  document.getElementById('boom').play();
+  let c=5;
+  let inter=setInterval(()=>{
+    document.getElementById('count').innerText="System Lock: "+c;
+    c--;
+    if(c<0){
+      clearInterval(inter);
+      document.getElementById('lock').style.display='none';
+      document.getElementById('main').style.display='block';
+    }
+  },1000);
+ }
+},7000);
+</script></body>
+</html>
