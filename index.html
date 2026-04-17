@@ -2,92 +2,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>██ SYSTEM OVERRIDE ██</title>
+<title>██ FINAL CORE ██</title>
 <style>
-body{margin:0;font-family:monospace;background:black;color:#00ffcc;overflow:hidden}
-#boot,#lock{position:fixed;width:100%;height:100%;background:black;color:#00ffcc;display:flex;align-items:center;justify-content:center;flex-direction:column}
-#main{display:none;padding:15px}
-.card{border:1px solid #00ffcc;padding:15px;margin:10px 0;cursor:pointer}
-#popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:black;border:1px solid #00ffcc;padding:15px;display:none;width:80%}
-#ip{position:fixed;bottom:5px;left:5px;font-size:10px;color:red}
+body{margin:0;background:black;color:#00ffcc;font-family:monospace;overflow:hidden}
+#start{position:fixed;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:black;z-index:10}
+#main{display:none;padding:10px}
+.card{border:1px solid #00ffcc;margin:10px 0;padding:10px}
+#overlay{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,255,200,0.05),rgba(0,255,200,0.05) 2px,transparent 2px,transparent 4px)}
 #warning{position:fixed;top:0;width:100%;text-align:center;color:red;font-size:12px}
-#cam{position:fixed;top:10px;right:10px;color:red;font-size:12px}
+#fakecam{position:fixed;top:10px;right:10px;color:red;font-size:12px}
+#terminal{position:fixed;bottom:0;width:100%;font-size:10px;color:#00ffcc;background:black;padding:5px}
 </style>
 </head>
-<body><div id="boot"><div id="text"></div></div>
-<div id="lock" style="display:none">
-<h2>⚠ ACCESS DENIED ⚠</h2>
-<p id="count"></p>
-</div><div id="main">
-<h2>☠ DARK CORE DATABASE ☠</h2>
-<div class="card" onclick="openData('DEBI OMPONG')">DEBI OMPONG</div>
-<div class="card" onclick="openData('AMRU JAWA KUNO')">AMRU JAWA KUNO</div>
-<div class="card" onclick="openData('NABIL PATEM')">NABIL PATEM</div>
-<div class="card" onclick="openData('RAFATHUL ZOMBIE')">RAFATHUL ZOMBIE</div>
-<div class="card" onclick="openData('ARKAN ORANG GANTENG')">ARKAN ORANG GANTENG</div>
-</div><div id="popup">
-<h3 id="name"></h3>
-<p id="info"></p>
-<p id="track"></p>
-</div><div id="ip"></div>
-<div id="warning">⚠ YOU ARE BEING MONITORED ⚠</div>
-<div id="cam">📸 CAMERA ACTIVE</div><audio autoplay loop>
+<body><div id="start">
+<button onclick="init()">ENTER SYSTEM</button>
+</div><div id="overlay"></div>
+<div id="warning">⚠ SYSTEM WATCHING ⚠</div>
+<div id="fakecam">📸 CAMERA ACTIVE</div><div id="main">
+<h2>☠ FINAL DATABASE ☠</h2>
+<div class="card">DEBI OMPONG</div>
+<div class="card">AMRU JAWA KUNO</div>
+<div class="card">NABIL PATEM</div>
+<div class="card">RAFATHUL ZOMBIE</div>
+<div class="card">ARKAN ORANG GANTENG</div>
+</div><div id="terminal"></div><audio id="bg" loop>
 <source src="https://www.myinstants.com/media/sounds/creepy-ambience.mp3">
-</audio><audio id="boom">
+</audio>
+<audio id="scream">
 <source src="https://www.myinstants.com/media/sounds/loud-scream.mp3">
 </audio><script>
-// BOOT
-let bootText=["Booting system...","Injecting code...","Bypassing firewall...","ACCESS GRANTED"];
-let i=0;
-function boot(){
- if(i<bootText.length){
-  document.getElementById('text').innerText=bootText[i];
-  i++;
-  setTimeout(boot,700);
- }else{
-  document.getElementById('boot').style.display='none';
-  document.getElementById('main').style.display='block';
- }
+function init(){
+ document.getElementById('start').style.display='none';
+ document.getElementById('main').style.display='block';
+ document.getElementById('bg').play();
+
+ // suara pembuka
+ speak("Ding dong... apakah kamu siap?");
+
+ // suara lanjut
+ setTimeout(()=>speak("Aku melihatmu..."),4000);
+ setTimeout(()=>speak("Jangan coba keluar..."),9000);
+
+ // glitch
+ setInterval(()=>{
+  document.body.style.filter="hue-rotate("+Math.random()*360+"deg)";
+ },500);
+
+ // fake terminal
+ setInterval(()=>{
+  let txt="ACCESS NODE "+Math.floor(Math.random()*9999)+"... OK";
+  document.getElementById('terminal').innerText=txt;
+ },1000);
+
+ // random scream
+ setInterval(()=>{
+  if(Math.random()>0.7){
+    document.getElementById('scream').play();
+  }
+ },8000);
+
+ // fake freeze effect
+ setInterval(()=>{
+  if(Math.random()>0.8){
+    document.body.style.opacity="0.3";
+    setTimeout(()=>document.body.style.opacity="1",500);
+  }
+ },3000);
 }
-boot();
 
-// DATA
-function openData(nama){
- document.getElementById('popup').style.display='block';
- document.getElementById('name').innerText=nama;
- document.getElementById('info').innerText="FILE CORRUPTED...";
- let loc=["Jakarta","Unknown","Dark Node","Hidden Server"];
- document.getElementById('track').innerText="Tracking: "+loc[Math.floor(Math.random()*loc.length)];
+function speak(text){
+ let msg=new SpeechSynthesisUtterance(text);
+ msg.lang="id-ID";
+ msg.rate=0.7;
+ msg.pitch=0.5;
+ speechSynthesis.speak(msg);
 }
-
-// FAKE IP
-setInterval(()=>{
- let ip=Math.floor(Math.random()*255)+"."+Math.floor(Math.random()*255)+"."+Math.floor(Math.random()*255)+"."+Math.floor(Math.random()*255);
- document.getElementById('ip').innerText="IP TRACE: "+ip;
-},2000);
-
-// GLITCH
-setInterval(()=>{
- document.body.style.filter="hue-rotate("+Math.random()*360+"deg)";
-},500);
-
-// RANDOM LOCKDOWN
-setInterval(()=>{
- if(Math.random()>0.75){
-  document.getElementById('main').style.display='none';
-  document.getElementById('lock').style.display='flex';
-  document.getElementById('boom').play();
-  let c=5;
-  let inter=setInterval(()=>{
-    document.getElementById('count').innerText="System Lock: "+c;
-    c--;
-    if(c<0){
-      clearInterval(inter);
-      document.getElementById('lock').style.display='none';
-      document.getElementById('main').style.display='block';
-    }
-  },1000);
- }
-},7000);
 </script></body>
 </html>
+
